@@ -21,4 +21,5 @@ Just paste this code in the console or use an extension such as Tampermonkey to 
             }
             this._onmessage(_data);
         };
-    };`
+    };
+`
