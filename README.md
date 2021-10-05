@@ -19,11 +19,14 @@ Just paste this code in the console or use an extension such as Tampermonkey to 
         this._onmessage = this.onmessage;
         this.onmessage = function(_data) {
             if (_data.data != "3probe" && _data.data != "3") {
-                let opCode = parseInt(_data.data, 10) + "", jsonData = _data.data.slice(opCode.length);
-                setTimeout(() => {
-                    console.log('%c Got:', 'color: #fa5a55', opCode, JSON.parse(jsonData ? jsonData : "[]"));
+                let delim = _data.data.indexOf("["), jsonData = _data.data.slice(delim);
+                try {
+                    var parsed = JSON.parse(jsonData ? jsonData : "[]");
+                    console.log('%c Got:', 'color: #fa5a55', parseInt(_data.data,10), parsed);
+                    if(parsed[0].stack) console.error(parsed[0].stack);
+                    else if(parsed[0].message) console.error((parsed[0].name?parsed[0].name:"UnknownError")+": "+parsed[0].message);
                     window.lastResponse=JSON.parse(jsonData ? jsonData : "[]");
-                }, 1);
+                } catch(e) {};
             }
             this._onmessage(_data);
         };
