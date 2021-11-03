@@ -2,7 +2,7 @@
 Just paste this code in the console or use an extension such as Tampermonkey to auto-inject it.
 
 ```javascript
-    (function() {
+(function() {
     'use strict';
     window._socketIoHookPromises = {};
     window.globalSendNo=5;
